@@ -10,7 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 sealed class Screen(val route: String) {
     object Login : Screen("login")
     object Register : Screen("register")
-    object Dashboard : Screen("dashboard")
+    object Menu : Screen("menu")
 }
 
 @Composable
@@ -25,7 +25,7 @@ fun AppNavHost() {
                 onPassword = vm::onPasswordChange,
                 onLogin = vm::login,
                 onSuccess = {
-                    navController.navigate(Screen.Dashboard.route) {
+                    navController.navigate(Screen.Menu.route) {
                         popUpTo(Screen.Login.route) { inclusive = true }
                     }
                 },
@@ -37,8 +37,14 @@ fun AppNavHost() {
                 onNavigateToLogin = { navController.popBackStack() }
             )
         }
-        composable(Screen.Dashboard.route) {
-            DashboardScreen()
+        composable(Screen.Menu.route) {
+            TelaMenu(
+                onLogout = {
+                    navController.navigate(Screen.Login.route) {
+                        popUpTo(Screen.Menu.route) { inclusive = true }
+                    }
+                }
+            )
         }
     }
 }

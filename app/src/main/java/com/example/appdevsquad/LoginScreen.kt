@@ -2,8 +2,10 @@ package com.example.appdevsquad
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -35,7 +37,8 @@ fun LoginScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(horizontal = 24.dp),
+            .padding(horizontal = 24.dp)
+            .verticalScroll(rememberScrollState()), // Makes the column scrollable
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.Start
     ) {
@@ -123,7 +126,9 @@ fun LoginScreen(
 
         // Register link
         val annotatedString = buildAnnotatedString {
-            append("Ainda não tem acesso? ")
+            withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.onBackground)) {
+                append("Ainda não é cadastrado? ")
+            }
             pushStringAnnotation(tag = "register", annotation = "register")
             withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)) {
                 append("Criar conta")
